@@ -12,7 +12,6 @@ class SidebarNav extends Component {
   }
 
   render() {
-    console.log('this.props', this.props);
     const { children } = this.props;
     return (
       <Row className='vh-100'>

@@ -14,7 +14,6 @@ function truncate(input) {
 };
 
 const MovieDetails = ({ item, showMovieDetails }) => {
-  console.log('item==>', item);
   return (
     <Row className='po-re h-100pc'>
       <Col sm={3} className='pr-0'>

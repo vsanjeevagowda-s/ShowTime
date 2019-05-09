@@ -22,8 +22,6 @@ class Moviedetail extends Component {
 
   showCrew() {
     const { casts_crew: { cast } } = this.props;
-
-    console.log('cast =>', cast);
     return <React.Fragment>
       <Col sm={12}>
         <div className='h3 mt-4'>Movie Casts</div>
@@ -43,7 +41,6 @@ class Moviedetail extends Component {
 
   render() {
     const { item } = this.props;
-    console.log('item ===>', item)
     return (
       <React.Fragment>
         <Row >

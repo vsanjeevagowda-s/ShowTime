@@ -7,7 +7,6 @@ import {
 
 
 const mapStateToPRops = state => {
-  console.log('mapStateToPRops/ state', state);
   const { items } = state.movie;
   return { items }
 }
