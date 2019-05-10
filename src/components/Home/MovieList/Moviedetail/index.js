@@ -2,7 +2,8 @@ import Moviedetail from './Moviedetail';
 import { connect } from 'react-redux';
 import {
   getMovieDetails,
-  getMovieCasts
+  getMovieCasts,
+  addTofavoriteList
 } from '../../../../actions/movie.actions';
 
 
@@ -13,7 +14,8 @@ const mapStateToPRops = state => {
 
 const actions = {
   getMovieDetails,
-  getMovieCasts
+  getMovieCasts,
+  addTofavoriteList,
 }
 
 export default connect(mapStateToPRops, actions)(Moviedetail);

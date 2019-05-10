@@ -1,7 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body{
+  font-family: 'Lato', sans-serif;
 }
 
 .vh-100{
@@ -46,4 +52,27 @@
 
 .width-inherit{
   width: inherit;
+}
+
+.h-4rem {
+  height: 4rem;
+}
+
+.display-flex{
+  display: flex;
+}
+
+.align-item-cent{
+  align-items: center;
+}
+.font-w-700 {
+  font-weight: 700;
+}
+
+.sidebar-bg{
+  background-color: #f0f0f0;
+}
+
+.a-decor-none{
+  text-decoration: none !important;
 }

@@ -4,15 +4,18 @@ export const GET_MOVIE_DETAILS_SUCCESS = 'GET_MOVIE_DETAILS_SUCCESS';
 export const GET_MOVIE_DETAILS_FAILURE = 'GET_MOVIE_DETAILS_FAILURE';
 export const GET_MOVIE_CASTS_SUCCESS = 'GET_MOVIE_CASTS_SUCCESS';
 export const GET_MOVIE_CASTS_FAILURE = 'GET_MOVIE_CASTS_FAILURE';
+export const ADD_TO_FAVORITE_LIST_SUCCESS = 'ADD_TO_FAVORITE_LIST_SUCCESS';
+export const LIST_FAVORITES_SUCCESS = 'LIST_FAVORITES_SUCCESS';
+export const LIST_FAVORITES_FAILURE = 'LIST_FAVORITES_FAILURE';
 
-const API_KEY = '0c1e8da2e9c9c27817279e3d01152994';
+const API_KEY = process.env.REACT_APP_API_KEY;
 
-const UPCOMMING_MOVIES_URL = 'https://api.themoviedb.org/3/movie/popular?api_key=0c1e8da2e9c9c27817279e3d01152994&language=en-US&page=1';
+const MOVIE_DETAILS_URL = process.env.REACT_APP_MOVIE_DETAILS_URL;
 
-const MOVIE_DETAILS_URL = 'https://api.themoviedb.org/3/movie';
+const ROOT_URL = process.env.REACT_APP_ROOT_URL;
 
 export const listMovies = () => (dispatch) => {
-  return fetch(UPCOMMING_MOVIES_URL)
+  return fetch(`${ROOT_URL}/upcommingMovies`)
     .then(resp => resp.json())
     .then(resp => {
       return Promise.resolve(dispatch(listMoviesSuccess(resp)))
@@ -37,8 +40,7 @@ const listMoviesFailure = (error) => {
 };
 
 export const getMovieDetails = (movId) => (dispatch) => {
-  const URL = `${MOVIE_DETAILS_URL}/${movId}?api_key=${API_KEY}&language=en-US`;
-  return fetch(URL)
+  return fetch(`${ROOT_URL}/upcommingMovies/${movId}`)
     .then(resp => resp.json())
     .then(resp => {
       return Promise.resolve(dispatch(getMovieDetailsSuccess(resp)))
@@ -85,6 +87,62 @@ const getMovieCaseSuccess = resp => {
 const getMovieCastFailure = error => {
   return {
     type: GET_MOVIE_CASTS_FAILURE,
+    error,
+  }
+}
+
+export const addTofavoriteList = (movieId) => (dispatch) => {
+  return fetch(`${ROOT_URL}/favorites`,{
+    method: 'post',
+    body: JSON.stringify({ movieId }),
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+    .then(resp => resp.json())
+    .then(resp => {
+      return Promise.resolve(dispatch(addToFavoriteListSuccess(resp)))
+    })
+    .catch(error => {
+      return Promise.reject(dispatch(addToFavoriteListFailure(error)));
+    });
+};
+
+const addToFavoriteListSuccess = (resp) => {
+  return {
+    type: ADD_TO_FAVORITE_LIST_SUCCESS,
+    resp,
+  }
+}
+
+const addToFavoriteListFailure = (error) => {
+  return {
+    type: addToFavoriteListFailure,
+    error,
+  }
+};
+
+export const listFavorites = () => (dispatch) => {
+  return fetch(`${ROOT_URL}/favorites`)
+  .then(resp => resp.json())
+  .then(resp => {
+    return Promise.resolve(dispatch(listFavoritesSuccess(resp)))
+  })
+  .catch(error => {
+    return Promise.reject(dispatch(listFavoritesFailure(error)));
+  })
+};
+
+const listFavoritesSuccess = (resp) => {
+  return {
+    type: LIST_FAVORITES_SUCCESS,
+    resp,
+  }
+};
+
+const listFavoritesFailure = (error) => {
+  return {
+    type: LIST_FAVORITES_FAILURE,
     error,
   }
 }

@@ -7,6 +7,10 @@ import {
 } from 'reactstrap';
 
 class Moviedetail extends Component {
+  constructor(props) {
+    super(props);
+    this.addTofavoriteHandler = this.addTofavoriteHandler.bind(this);
+  }
 
   componentDidMount() {
     const {
@@ -14,7 +18,6 @@ class Moviedetail extends Component {
       getMovieDetails,
       getMovieCasts
     } = this.props;
-    debugger
     const { id } = match.params;
     getMovieDetails(id)
       .then(resp => getMovieCasts(id));
@@ -39,12 +42,17 @@ class Moviedetail extends Component {
     </React.Fragment>
   }
 
+  addTofavoriteHandler(id) {
+    const { addTofavoriteList } = this.props;
+    addTofavoriteList(id);
+  }
+
   render() {
     const { item } = this.props;
     return (
       <React.Fragment>
         <Row >
-          <Col sm={4} className='pr-0'>
+          <Col sm={4} className='pl-0 pr-0'>
             <CardImg src={`http://image.tmdb.org/t/p/w185/${item.poster_path}`} />
           </Col>
           <Col sm={8} className='pl-0 bg-light'>
@@ -56,8 +64,17 @@ class Moviedetail extends Component {
                 <div className='h-2rem w-2rem p-1 text-center rounded-circle bg-secondary text-light'>{item.vote_average}</div>
               </Col>
               <Col sm={11}>
-                <Button color='secondary' className='m-1'>Make as Favorite</Button>
-                <Button outline color='secondary'>Play Trailer</Button>
+                {!item.favorite && <Button
+                  onClick={() => this.addTofavoriteHandler(item.id)}
+                  color='secondary' className='m-1'>Make as Favorite
+                </Button>}
+                {item.favorite && <Button
+                  disabled
+                  color='secondary' className='m-1'>Make as Favorite
+                </Button>}
+                <Button outline color='secondary'>
+                  Play Trailer
+                </Button>
               </Col>
               <Col sm={12} className='mt-2'>
                 <div className='h5'>Overview</div>
